@@ -3,6 +3,7 @@
 #include "mbed.h"
 #include "cvcore.h"
 #include <stdint.h>
+#include <cmath>
 #include <vector>
 #include <string_view>
 

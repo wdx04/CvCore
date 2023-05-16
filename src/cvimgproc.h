@@ -28,6 +28,20 @@ namespace cv
     constexpr uint8_t RGB332_YELLOW = 0xFC;
     constexpr uint8_t RGB332_WHITE = 0xFF;
 
+    /** Possible set of marker types used for the cv::drawMarker function
+    @ingroup imgproc_draw
+    */
+    enum MarkerTypes
+    {
+        MARKER_CROSS = 0,           //!< A crosshair marker shape
+        MARKER_TILTED_CROSS = 1,    //!< A 45 degree tilted crosshair marker shape
+        MARKER_STAR = 2,            //!< A star marker shape, combination of cross and tilted cross
+        MARKER_DIAMOND = 3,         //!< A diamond marker shape
+        MARKER_SQUARE = 4,          //!< A square marker shape
+        MARKER_TRIANGLE_UP = 5,     //!< An upwards pointing triangle marker shape
+        MARKER_TRIANGLE_DOWN = 6    //!< A downwards pointing triangle marker shape
+    };
+
     class Painter
     {
     public:
@@ -52,6 +66,8 @@ namespace cv
         void putText(std::wstring_view text, Point org, UnicodeFont& font, uint16_t text_color, uint16_t bg_color, bool word_wrap = false, int *consumed_chars = nullptr);
 
         void drawBitmap(const Mat& bitmap, Point org);
+
+        void drawMarker(Point position, uint16_t color, int markerType, int markerSize, int thickness);
 
         Mat get_mat() const;
 
