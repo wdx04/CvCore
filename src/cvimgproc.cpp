@@ -842,7 +842,7 @@ namespace cv
 
             if(fabs(r) > 1e-5)
             {
-                r = (thickness + oddThickness*XY_ONE*0.5f)/std::sqrtf(r);
+                r = (thickness + oddThickness*XY_ONE*0.5f)/std::sqrt(r);
                 dp.x = cvRound( dy * r );
                 dp.y = cvRound( dx * r );
 
@@ -1450,6 +1450,67 @@ namespace cv
             }
 #endif
             update_dirty_rect(target_rect);
+        }
+    }
+
+    void Painter::drawMarker(Point position, uint16_t color, int markerType, int markerSize, int thickness)
+    {
+        switch(markerType)
+        {
+        // The cross marker case
+        case MARKER_CROSS:
+            line(Point(position.x-(markerSize/2), position.y), Point(position.x+(markerSize/2), position.y), color, thickness);
+            line(Point(position.x, position.y-(markerSize/2)), Point(position.x, position.y+(markerSize/2)), color, thickness);
+            break;
+
+        // The tilted cross marker case
+        case MARKER_TILTED_CROSS:
+            line(Point(position.x-(markerSize/2), position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y-(markerSize/2)), Point(position.x-(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            break;
+
+        // The star marker case
+        case MARKER_STAR:
+            line(Point(position.x-(markerSize/2), position.y), Point(position.x+(markerSize/2), position.y), color, thickness);
+            line(Point(position.x, position.y-(markerSize/2)), Point(position.x, position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x-(markerSize/2), position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y-(markerSize/2)), Point(position.x-(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            break;
+
+        // The diamond marker case
+        case MARKER_DIAMOND:
+            line(Point(position.x, position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y), Point(position.x, position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x, position.y+(markerSize/2)), Point(position.x-(markerSize/2), position.y), color, thickness);
+            line(Point(position.x-(markerSize/2), position.y), Point(position.x, position.y-(markerSize/2)), color, thickness);
+            break;
+
+        // The square marker case
+        case MARKER_SQUARE:
+            line(Point(position.x-(markerSize/2), position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y-(markerSize/2)), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y+(markerSize/2)), Point(position.x-(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x-(markerSize/2), position.y+(markerSize/2)), Point(position.x-(markerSize/2), position.y-(markerSize/2)), color, thickness);
+            break;
+
+        // The triangle up marker case
+        case MARKER_TRIANGLE_UP:
+            line(Point(position.x-(markerSize/2), position.y+(markerSize/2)), Point(position.x+(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x+(markerSize/2), position.y+(markerSize/2)), Point(position.x, position.y-(markerSize/2)), color, thickness);
+            line(Point(position.x, position.y-(markerSize/2)), Point(position.x-(markerSize/2), position.y+(markerSize/2)), color, thickness);
+            break;
+
+        // The triangle down marker case
+        case MARKER_TRIANGLE_DOWN:
+            line(Point(position.x-(markerSize/2), position.y-(markerSize/2)), Point(position.x+(markerSize/2), position.y-(markerSize/2)), color, thickness);
+            line( Point(position.x+(markerSize/2), position.y-(markerSize/2)), Point(position.x, position.y+(markerSize/2)), color, thickness);
+            line(Point(position.x, position.y+(markerSize/2)), Point(position.x-(markerSize/2), position.y-(markerSize/2)), color, thickness);
+            break;
+
+        // If any number that doesn't exist is entered as marker type, draw a cross marker, to avoid crashes
+        default:
+            drawMarker(position, color, MARKER_CROSS, markerSize, thickness);
+            break;
         }
     }
 

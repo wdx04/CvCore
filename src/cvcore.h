@@ -247,7 +247,7 @@ namespace cv
 
     inline float norm(const Point& pt)
     {
-        return std::sqrtf((float)pt.x*pt.x + (float)pt.y*pt.y);
+        return std::sqrt((float)pt.x*pt.x + (float)pt.y*pt.y);
     }
 
     inline bool operator == (const Size& a, const Size& b)
@@ -348,7 +348,7 @@ namespace cv
 
     inline float norm(const Point2f& pt)
     {
-        return std::sqrtf((float)pt.x*pt.x + (float)pt.y*pt.y);
+        return std::sqrt((float)pt.x*pt.x + (float)pt.y*pt.y);
     }
 
     inline Rect2f& operator &= (Rect2f& a, const Rect2f& b)

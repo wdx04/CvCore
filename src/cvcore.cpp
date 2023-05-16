@@ -195,16 +195,14 @@ namespace cv
         Point2f vecs[2];
         vecs[0] = _point1 - _point2;
         vecs[1] = _point2 - _point3;
-        float x = std::max(norm(_point1), std::max(norm(_point2), norm(_point3)));
-        float a = std::min(norm(vecs[0]), norm(vecs[1]));
 
         // wd_i stores which vector (0,1) or (1,2) will make the width
         // One of them will definitely have slope within -1 to 1
         int wd_i = 0;
-        if( std::fabsf(vecs[1].y) < std::fabsf(vecs[1].x) ) wd_i = 1;
+        if( std::fabs(vecs[1].y) < std::fabs(vecs[1].x) ) wd_i = 1;
         int ht_i = (wd_i + 1) % 2;
 
-        float _angle = std::atanf(vecs[wd_i].y / vecs[wd_i].x) * 180.0f / (float) CV_PI;
+        float _angle = std::atan(vecs[wd_i].y / vecs[wd_i].x) * 180.0f / (float) CV_PI;
         float _width = (float) norm(vecs[wd_i]);
         float _height = (float) norm(vecs[ht_i]);
 
@@ -272,7 +270,7 @@ namespace cv
     }
 
     Mat::Mat(int _rows, int _cols, int _type, void* _data, size_t _step)
-        : rows(_rows), cols(_cols), type(_type), data(reinterpret_cast<uint8_t*>(_data))
+        : type(_type), rows(_rows), cols(_cols), data(reinterpret_cast<uint8_t*>(_data))
     {
         step[0] = _step;
         step[1] = elemSize();
