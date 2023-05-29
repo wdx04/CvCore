@@ -149,7 +149,7 @@ namespace cv
         int start = 0, end = 0;
     };
 
-    enum MatType { MONO8 = 0, RGB565 = 1 };
+    enum MatType { MONO8 = 0, RGB332 = 0, RGB565 = 1 };
     constexpr size_t AUTO_STEP = 0;
 
     class Mat
